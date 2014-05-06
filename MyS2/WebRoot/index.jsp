@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  		<a href="serviceAction">service--execute</a>
  		<a href="serviceAction!go">service--go</a>
  		<a href="loginAction">login</a>
- 		sdfds
+ 		
  		
  		
   </body>
