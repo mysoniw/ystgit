@@ -18,16 +18,17 @@ import com.weikun.bean.ActionConfig;
 
 public class ActionHelperService {
 	public static void main(String[] args) {
-		ActionConfig ac=new ActionHelperService().parseAcion("struts.xml");
-		System.out.println(ac.getActionName());
-		System.out.println(ac.getActionClass());
-		System.out.println(ac.getResult().get("success"));
+		Map<String,ActionConfig> amap=new HashMap<String,ActionConfig>();
+		amap=new ActionHelperService().parseAcion("struts.xml");
+		System.out.println(amap.get("serviceAction").getActionName());
+		
 	}
-	public ActionConfig parseAcion(String filename){
+	public Map<String,ActionConfig> parseAcion(String filename){
+		Map<String,ActionConfig> amap=new HashMap<String,ActionConfig>();
 		
 		InputStream is=ActionHelperService.class.getClassLoader().getResourceAsStream(filename);
 		
-		ActionConfig ac=new ActionConfig();
+		
 		try {
 			SAXReader sr=new SAXReader();
 			Document doc=sr.read(is);
@@ -36,13 +37,18 @@ public class ActionHelperService {
 			
 			Element pac=root.element("package");
 			//System.out.println(pac.attributeValue("name"));
+			
+			
 			List<Element> actions=pac.elements("action");
+			
+			
+			
 			Iterator<Element> ita=actions.iterator();
 			
 			while(ita.hasNext()){
 				
 				Element action=ita.next();
-				
+				ActionConfig ac=new ActionConfig();
 				ac.setActionName(action.attributeValue("name"));
 				ac.setActionClass(action.attributeValue("class"));
 				
@@ -58,6 +64,10 @@ public class ActionHelperService {
 				}
 				
 				ac.setResult(map);
+				
+				
+				
+				amap.put(ac.getActionName(), ac);
 			}
 			
 			
@@ -69,7 +79,7 @@ public class ActionHelperService {
 			e.printStackTrace();
 		}
 		
-		return ac;
+		return amap;
 		
 	}
 }

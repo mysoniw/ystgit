@@ -4,7 +4,11 @@
 		namespace="/" extends="struts-default">
 		<action name="serviceAction" class="com.weikun.action.ServiceAction">
 			<result name="ok">ok.jsp</result>
-			<result name="success">hello.jsp</result>
+			<result name="success">success.jsp</result>
+		</action>
+		<action name="loginAction" class="com.weikun.action.LoginAction">
+			<result name="ok">ok.jsp</result>
+			
 		</action>
 		
 		

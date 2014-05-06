@@ -3,7 +3,17 @@ package com.weikun.action;
 public class ServiceAction {
 	
 	public String execute(){
+		return "success";
+	}
+	
+	
+	public String regist(){
 		
-		return null;
+		return "success";
+	}
+	
+	public String go(){
+		
+		return "ok";
 	}
 }
