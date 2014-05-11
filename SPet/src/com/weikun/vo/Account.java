@@ -6,6 +6,21 @@ public class Account implements Serializable {
 	private int id;
 	private String username;
 	private String password;
+	private String repassword;
+	private Profile profile;
+	
+	public Profile getProfile() {
+		return profile;
+	}
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+	}
+	public String getRepassword() {
+		return repassword;
+	}
+	public void setRepassword(String repassword) {
+		this.repassword = repassword;
+	}
 	private String email;
 	private String address;
 	private String xm;

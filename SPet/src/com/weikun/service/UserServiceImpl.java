@@ -11,5 +11,10 @@ public class UserServiceImpl implements IUserService {
 		// TODO Auto-generated method stub
 		return dao.login(account);
 	}
+	@Override
+	public boolean addA(Account account) {
+		// TODO Auto-generated method stub
+		return dao.addA(account);
+	}
 
 }

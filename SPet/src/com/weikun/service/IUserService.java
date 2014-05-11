@@ -4,4 +4,6 @@ import com.weikun.vo.Account;
 
 public interface IUserService {
 	public boolean login(Account account) ;
+	
+	public boolean addA(Account account) ;
 }

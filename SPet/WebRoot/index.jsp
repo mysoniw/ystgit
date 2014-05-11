@@ -16,7 +16,7 @@
       name=img_cart src="images/cart.gif"></A>
       <IMG border=0 src="images/separator.gif">
 
-      <A href="" >
+      <A href="shop/user!loginmain.do">
       <IMG border=0 name=img_signin src="images/sign-in.gif"></A>
       <IMG border=0
       src="images/separator.gif"> <A
