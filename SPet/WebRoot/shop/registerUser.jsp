@@ -3,7 +3,7 @@
 <%@include file="../commons/top.jsp"%>
 <br/>
 
-<s:form name="form1" id="form1" action="user!register.do" method="post">
+<s:form name="form1" id="form1" action="register!register.do" method="post">
 	<TABLE cellpadding=10 cellspacing=0 align=center border=1 width="400"
 		bgcolor=#dddddd>
 		<TR>
@@ -11,6 +11,7 @@
 				<FONT color=darkgreen>
 					<H3>
 						<s:text name="register.title"></s:text>
+						<s:token></s:token>
 					</H3>
 				</FONT>
 				<TABLE border=0  bgcolor=#FFFF88  width="100%">
@@ -100,7 +101,9 @@
 						</TD>
 					</TR>
 					<tr>
-						<td><input border=0 type="image" src="../images/button_submit.gif" /></td>
+						<td><input border=0 type="image" src="../images/button_submit.gif" />
+							<s:actionerror/>
+						</td>
 					</tr>
 				</TABLE>
 	</TABLE>

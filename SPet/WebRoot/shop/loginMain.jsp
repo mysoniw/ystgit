@@ -36,7 +36,7 @@
 	</table>
 	</s:form>
 <center>
-	<a href="user!regmain.do"><img border="0"
+	<a href="register!regmain.do"><img border="0"
 			src="../images/button_register_now.gif" />
 	</a>
 </center>

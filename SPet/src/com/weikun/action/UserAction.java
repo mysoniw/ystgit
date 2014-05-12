@@ -2,6 +2,8 @@ package com.weikun.action;
 
 import java.util.List;
 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -21,22 +23,36 @@ import com.weikun.vo.Category;
 
 @ParentPackage(value="struts-default")
 @Namespace(value="/shop")
-@Results({
-	@Result(name="loginmain",location="/shop/loginMain.jsp",type="dispatcher"),
-	@Result(name="regmain",location="/shop/registerUser.jsp",type="dispatcher"),
-	@Result(name="input",location="/shop/registerUser.jsp",type="dispatcher"),
 
-	@Result(name="success",location="/shop/main.jsp",type="dispatcher"),
-	@Result(name="invalid.token",location="/shop/loginMain.jsp")
+
+
+@Actions({
+	@Action(value="/user",
+			results={
+				@Result(name="loginmain",location="/shop/loginMain.jsp",type="dispatcher"),
+				@Result(name="success",location="/shop/main.jsp",type="dispatcher"),
+				@Result(name="invalid.token",location="/shop/loginMain.jsp")
+			},interceptorRefs={
+			@InterceptorRef(value="defaultStack"),
+			@InterceptorRef(value="token",params={"includeMethods","login"})
+		
+			}),
+	
+	@Action(value="/register",
+			results={				
+				@Result(name="regmain",location="/shop/registerUser.jsp",type="dispatcher"),
+				@Result(name="input",location="/shop/registerUser.jsp",type="dispatcher"),
+				@Result(name="invalid.token",location="/shop/registerUser.jsp"),
+				@Result(name="loginmain",location="/shop/loginMain.jsp",type="dispatcher"),
+			},
+			interceptorRefs={
+					@InterceptorRef(value="defaultStack"),
+					
+					@InterceptorRef(value="token",params={"includeMethods","register"})
+				
+			})
 })
-@InterceptorRefs({
 
-
-	@InterceptorRef(value="token",params={"includeMethods","login",
-			"excludeMethods","loginmain,regmain"}),
-			@InterceptorRef(value="defaultStack")
-
-})
 
 public class UserAction extends ActionSupport implements Preparable {
 	private IUserService service =new UserServiceImpl();
