@@ -41,7 +41,7 @@
        <a href="i18n.do?key=2"> <s:text name="english"></s:text></a>
      
       <p align="center"><b> <s:text name="welcome.title"></s:text></b></p>
-      <p align="center"><a href="shop/main.jsp"> <s:text name="welcome.enter"></s:text></a></p>
+      <p align="center"><a href="shop/user!main.do"> <s:text name="welcome.enter"></s:text></a></p>
       </TD>
   </TR>
   </TBODY>

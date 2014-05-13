@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-
+<%@ taglib prefix="s" uri="/struts-tags" %>
 	<%@include file="../commons/top.jsp" %>
 
 		<table border="0" cellspacing="2" cellpadding="0" width="100%">
@@ -22,18 +22,29 @@
 													<tbody>
 														<tr>
 															<td>
-																<b><i><font size="2" color="BLACK"></font></i></b>
+																<b><i>
+																<s:if test="#session.account!=null">
+																
+																<font size="2" color="BLACK">
+																
+																	<s:text name="main.welcome"></s:text>
+																	<s:property value="#session.account.username"/>
+																
+																</font>
+																</s:if>
+																</i></b>
 																&nbsp;
 															</td>
 														</tr>
 														<tr>
 															<td>
+															<a href="product!queryC.do?category.catid=FISH">
 															<img
 																		border="0" src="../images/fish_icon.gif" />
-															
+															</a>
 																
 																<br>
-																<font size="2"><i></i>
+																<font size="2"><i><s:text name="main.fish"></s:text></i>
 																</font>
 															</td>
 														</tr>

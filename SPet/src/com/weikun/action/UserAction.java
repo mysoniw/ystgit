@@ -2,6 +2,9 @@ package com.weikun.action;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -31,6 +34,7 @@ import com.weikun.vo.Category;
 			results={
 				@Result(name="loginmain",location="/shop/loginMain.jsp",type="dispatcher"),
 				@Result(name="success",location="/shop/main.jsp",type="dispatcher"),
+				@Result(name="main",location="/shop/main.jsp"),
 				@Result(name="invalid.token",location="/shop/loginMain.jsp")
 			},interceptorRefs={
 			@InterceptorRef(value="defaultStack"),
@@ -113,10 +117,15 @@ public class UserAction extends ActionSupport implements Preparable {
 
 
 	}
+	
+	public String main() throws Exception {
+		
+		return "main";
+		
+	}
 	public String regmain() throws Exception {
 		
 			
-
 			return "regmain";
 			
 		
@@ -125,10 +134,13 @@ public class UserAction extends ActionSupport implements Preparable {
 	}
 	public String login() throws Exception {
 		// TODO Auto-generated method stub
-
-
-
 		if(service.login(account)){
+			HttpSession session=ServletActionContext.getRequest().getSession();
+			
+			session.setAttribute("account", account);
+
+			
+			
 			return "success";
 		}
 		return "success";
