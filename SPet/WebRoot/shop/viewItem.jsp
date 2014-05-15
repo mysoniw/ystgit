@@ -55,7 +55,7 @@
 
 		<tr bgcolor="#FFFF88">
 			<td>
-				<a href="cartmain.xhtml"><img border="0"
+				<a href="cart!add.do?cart.quantity=1&cart.item.itemid=<s:property value="#attr.item.itemid"></s:property>"><img border="0"
 						src="../images/button_add_to_cart.gif" />
 				</a>
 			</td>

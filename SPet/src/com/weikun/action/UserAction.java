@@ -50,8 +50,7 @@ import com.weikun.vo.Category;
 				@Result(name="loginmain",location="/shop/loginMain.jsp",type="dispatcher"),
 			},
 			interceptorRefs={
-					@InterceptorRef(value="defaultStack"),
-					
+					@InterceptorRef(value="defaultStack"),					
 					@InterceptorRef(value="token",params={"includeMethods","register"})
 				
 			})

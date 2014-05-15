@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-
-
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ include file="../commons/top.jsp" %>
 
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
 	<tr>
@@ -19,39 +19,38 @@
 			<h2 align="center">
 				
 			</h2>
-			<form name="form1" method="post"
-				action="cartupdate.xhtml">
+			<form name="form1" method="post" action="cart!update.do">
 				
 				<table align="center" bgcolor="#008800" border="0" cellspacing="2"
 					cellpadding="5" >
 					<tr bgcolor="#cccccc">
 						<td>
-							
+							<s:text name="item.id"></s:text>
 						</td>
 						<td>
-							
+							<s:text name="product.id"></s:text>
 						</td>
 						<td>
-							
+							<s:text name="item.description"></s:text>
 						</td>
 						<td>
-							<b></b>
+							<b><s:text name="item.stock"></s:text></b>
 						</td>
 						<td width="100">
-							
+								<s:text name="item.quantity"></s:text>
 						</td>
 						<td>
-							
+							<s:text name="item.price"></s:text>
 						</td>
 						<td>
-							
+							<s:text name="cart.total"></s:text>
 						</td>
 						<td>
 							&nbsp;
 						</td>
 					</tr>
 
-			
+					<s:iterator value="#attr.list" var="cart">
 			
 					
 					
@@ -60,32 +59,35 @@
 							<b> 
 							
 							
-							<a href="viewitem.xhtml?itemid=<s:property value="#cart.itemid"/>"><s:property value="#cart.itemid"/></a>
+							<a href="viewitem.xhtml?itemid=<s:property value="#cart.itemid"/>"><s:property value="#cart.item.itemid"/></a>
 							
 							</b>
 						</td>
 						<td>
-							
-						
+							<s:hidden name="lines" value="%{#cart.linenum}"></s:hidden>
+							<s:hidden name="orderids" value="%{#cart.orders.orderid}"></s:hidden>
+							<s:property value="#cart.item.product.productid"/>
 						</td>
 						<td>
 							
-							
+								<s:property value="#cart.item.attr1"/>  	<s:property value="#cart.product.name"/>
 						</td>
 						<td align="center">
-						
+							有
 							
 						</td>
 						<td>
 							
-														
+									
+							<s:textfield name="quantitys" value="%{#cart.quantity}" theme="simple"></s:textfield>					
 						</td>
 						<td align="right">
-							
+								<s:property value="#cart.item.listprice"/>		
 							<br/>
 						</td>
 						<td align="right">
-						
+							<s:set value="#cart.item.listprice*#cart.quantity" var="sum"></s:set>
+							<s:property value="#sum"/>
 							
 						</td>
 						<td>
@@ -95,11 +97,14 @@
 						</td>
 					</tr>
 					
-					
+					</s:iterator>
 			
 					<tr bgcolor="#FFFF88">
 						<td colspan="7" align="right">
 							<b>
+							<input type="image" border="0"
+									src="../images/button_update_cart.gif" />
+							
 							</b>							
 							
 						</td>
