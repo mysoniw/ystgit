@@ -29,6 +29,8 @@
 		<mapping resource="com/weikun/po/Husband.hbm.xml" />
 		<mapping resource="com/weikun/po/Father.hbm.xml" />
 		<mapping resource="com/weikun/po/Son.hbm.xml" />
+		<mapping resource="com/weikun/po/Stu.hbm.xml" />
+		<mapping resource="com/weikun/po/Teacher.hbm.xml" />
 
 	</session-factory>
 

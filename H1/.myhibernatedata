@@ -1,11 +1,11 @@
 #MyEclipse Hibernate Properties
-#Mon May 19 19:57:32 CST 2014
+#Tue May 20 17:39:10 CST 2014
 genBasicCompId=false
 sessionFactoryName=com.weikun.po.HibernateSessionFactory
 profile=
 daoSFId=
 jndiPath=
-detectM2M=false
+detectM2M=true
 reStrategyClass=
 detectO2O=false
 springDaoFile=
