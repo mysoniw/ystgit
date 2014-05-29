@@ -9,7 +9,7 @@ import org.apache.struts2.convention.annotation.Results;
 import com.opensymphony.xwork2.ActionSupport;
 import com.weikun.service.CategoryServieImpl;
 import com.weikun.service.ICategoryService;
-import com.weikun.vo.Category;
+import com.weikun.po.Category;
 @ParentPackage(value="struts-default")
 @Results({
 	

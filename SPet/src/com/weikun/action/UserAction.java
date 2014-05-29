@@ -8,11 +8,11 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.InterceptorRef;
-import org.apache.struts2.convention.annotation.InterceptorRefs;
+
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.convention.annotation.Results;
+
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
@@ -20,7 +20,7 @@ import com.weikun.service.CategoryServieImpl;
 import com.weikun.service.ICategoryService;
 import com.weikun.service.IUserService;
 import com.weikun.service.UserServiceImpl;
-import com.weikun.vo.Account;
+
 import com.weikun.vo.Category;
 
 
@@ -60,26 +60,26 @@ import com.weikun.vo.Category;
 public class UserAction extends ActionSupport implements Preparable {
 	private IUserService service =new UserServiceImpl();
 	private ICategoryService cservice=new CategoryServieImpl();
-	private Account account;
-	private List<Category> list;
+	private com.weikun.po.Account account;
+	private List<com.weikun.po.Category> list;
 
-	public List<Category> getList() {
+	public List<com.weikun.po.Category> getList() {
 		return list;
 	}
 
 
 
-	public void setList(List<Category> list) {
+	public void setList(List<com.weikun.po.Category> list) {
 		this.list = list;
 	}
 
 
 
-	public Account getAccount() {
+	public com.weikun.po.Account getAccount() {
 		return account;
 	}
 
-	public void setAccount(Account account) {
+	public void setAccount(com.weikun.po.Account account) {
 		this.account = account;
 	}
 	public String loginmain() throws Exception {
@@ -97,21 +97,21 @@ public class UserAction extends ActionSupport implements Preparable {
 				return "regmain";
 			}
 		}
-
+	
 		
 
 	}
 
 	public void validateRegister() {
 		// TODO Auto-generated method stub
-		if(!account.getPassword().equals(account.getRepassword())){
-			this.addFieldError("account.password", this.getText("register.error.repeat"));
-
-		}
-		if(!account.getEmail().matches("^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$")){
-			this.addFieldError("account.email", this.getText("register.error.email"));
-
-		}
+//		if(!account.getPassword().equals(account.getRepassword())){
+//			this.addFieldError("account.password", this.getText("register.error.repeat"));
+//
+//		}
+//		if(!account.getEmail().matches("^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$")){
+//			this.addFieldError("account.email", this.getText("register.error.email"));
+//
+//		}
 
 
 

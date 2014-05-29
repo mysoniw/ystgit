@@ -1,9 +1,9 @@
 package com.weikun.service;
 
-import com.weikun.vo.Account;
+
 
 public interface IUserService {
-	public boolean login(Account account) ;
+	public boolean login(com.weikun.po.Account account) ;
 	
-	public boolean addA(Account account) ;
+	public boolean addA(com.weikun.po.Account account) ;
 }

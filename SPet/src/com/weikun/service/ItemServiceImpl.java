@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.weikun.dao.IItemDAO;
 import com.weikun.dao.ItemDAOImpl;
-import com.weikun.vo.Item;
-import com.weikun.vo.Product;
+import com.weikun.po.Item;
+import com.weikun.po.Product;
 
 public class ItemServiceImpl implements IItemService {
 	private IItemDAO dao=new ItemDAOImpl();

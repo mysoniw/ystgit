@@ -10,8 +10,8 @@ import org.apache.struts2.convention.annotation.Results;
 import com.opensymphony.xwork2.ActionSupport;
 import com.weikun.service.IProductService;
 import com.weikun.service.ProductServiceImpl;
-import com.weikun.vo.Category;
-import com.weikun.vo.Product;
+import com.weikun.po.Category;
+import com.weikun.po.Product;
 
 
 

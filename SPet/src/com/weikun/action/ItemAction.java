@@ -10,8 +10,8 @@ import org.apache.struts2.convention.annotation.Results;
 import com.opensymphony.xwork2.ActionSupport;
 import com.weikun.service.IItemService;
 import com.weikun.service.ItemServiceImpl;
-import com.weikun.vo.Item;
-import com.weikun.vo.Product;
+import com.weikun.po.Item;
+import com.weikun.po.Product;
 
 
 
@@ -25,13 +25,13 @@ import com.weikun.vo.Product;
 public class ItemAction extends ActionSupport {
 	private IItemService service=new ItemServiceImpl();
 	private Product product;
-	private Item item;
+	private com.weikun.po.Item item;
 	
-	public Item getItem() {
+	public com.weikun.po.Item getItem() {
 		return item;
 	}
 
-	public void setItem(Item item) {
+	public void setItem(com.weikun.po.Item item) {
 		this.item = item;
 	}
 
@@ -42,13 +42,13 @@ public class ItemAction extends ActionSupport {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	private List<Item> ilist;
+	private List<com.weikun.po.Item> ilist;
 	
-	public List<Item> getIlist() {
+	public List<com.weikun.po.Item> getIlist() {
 		return ilist;
 	}
 
-	public void setIlist(List<Item> ilist) {
+	public void setIlist(List<com.weikun.po.Item> ilist) {
 		this.ilist = ilist;
 	}
 

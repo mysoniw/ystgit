@@ -92,7 +92,7 @@
 							list="#attr.list"
 							listKey="catid"
 							listValue="name"
-							name="account.profile.cate.catid"
+							name="account.profile.category.catid"
 							key="register.favourite"
 							>
 							

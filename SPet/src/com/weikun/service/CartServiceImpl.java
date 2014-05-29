@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.weikun.dao.CartDAOImpl;
 import com.weikun.dao.ICartDAO;
-import com.weikun.vo.Cart;
+import com.weikun.po.Cart;
 
 public class CartServiceImpl implements ICartService {
 	private ICartDAO dao=new CartDAOImpl();

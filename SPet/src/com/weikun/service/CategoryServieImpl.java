@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.weikun.dao.CategoryDAOImpl;
 import com.weikun.dao.ICategoryDAO;
-import com.weikun.vo.Category;
+import com.weikun.po.Category;
 
 public class CategoryServieImpl implements ICategoryService {
 	private ICategoryDAO dao=new CategoryDAOImpl();

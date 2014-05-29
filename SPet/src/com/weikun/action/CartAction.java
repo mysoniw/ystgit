@@ -1,5 +1,6 @@
 package com.weikun.action;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Namespace;
@@ -10,8 +11,8 @@ import org.apache.struts2.convention.annotation.Results;
 import com.opensymphony.xwork2.ActionSupport;
 import com.weikun.service.CartServiceImpl;
 import com.weikun.service.ICartService;
-import com.weikun.vo.Cart;
-import com.weikun.vo.Orders;
+import com.weikun.po.Cart;
+import com.weikun.po.Orders;
 @ParentPackage(value="struts-default")
 @Namespace(value="/shop")
 @Results({	
@@ -82,11 +83,11 @@ public class CartAction extends ActionSupport {
 		Cart c=new Cart();
 		for(int i=0;i<lines.length;i++){
 			
-			c.setLinenum(new Integer(lines[i]));
-			c.setQuantity(new Integer(quantitys[i]));
+			c.getId().setLinenum(new BigDecimal(new Integer(lines[i])));
+			c.setQuantity(new BigDecimal(new Integer(quantitys[i])));
 			Orders s=new Orders();
-			s.setOrderid(new Integer(orderids[i]));
-			c.setOrders(s);
+			s.setOrderid(new BigDecimal(new Integer(orderids[i])));
+			c.getId().setOrders(s);
 			list=service.updateCart(c);
 			
 		}
