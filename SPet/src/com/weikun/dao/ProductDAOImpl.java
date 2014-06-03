@@ -18,7 +18,7 @@ import com.weikun.po.Product;
 public class ProductDAOImpl implements IProductDAO {
 	private DruidPooledConnection conn;
 	public ProductDAOImpl(){
-		conn=DB.getConnection();
+	//	conn=DB.getConnection();
 		
 	}
 	@Override

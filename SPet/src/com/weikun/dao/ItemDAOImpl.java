@@ -20,7 +20,7 @@ import com.weikun.po.Product;
 public class ItemDAOImpl implements IItemDAO {
 	private DruidPooledConnection conn;
 	public ItemDAOImpl(){
-		conn=DB.getConnection();
+		//conn=DB.getConnection();
 		
 	}
 //	@Override	

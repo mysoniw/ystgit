@@ -18,7 +18,7 @@ public class CategoryDAOImpl implements ICategoryDAO {
 	private DruidPooledConnection conn;
 	public CategoryDAOImpl(){
 		
-		conn=DB.getConnection();
+		//conn=DB.getConnection();
 	}
 //	@Override
 //	public List<Category> queryC() {

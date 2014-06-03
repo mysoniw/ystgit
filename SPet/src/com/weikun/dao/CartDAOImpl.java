@@ -24,7 +24,7 @@ import com.weikun.po.Product;
 public class CartDAOImpl implements ICartDAO {
 	private DruidPooledConnection conn;
 	public CartDAOImpl(){
-		conn=DB.getConnection();
+		//conn=DB.getConnection();
 	}
 //	public int getMaxLinenum(int orderid){		
 //		int count=0;
@@ -217,7 +217,7 @@ public class CartDAOImpl implements ICartDAO {
 			session.update(c);
 			
 			trans.commit();
-			list=this.queryCart(cart.getId().getOrders().getOrderid());
+			
 			
 			
 		} catch (Exception e) {
@@ -228,6 +228,7 @@ public class CartDAOImpl implements ICartDAO {
 			HibernateSessionFactory.closeSession();
 			
 		}
+		list=this.queryCart(cart.getId().getOrders().getOrderid());
 		return list;
 		
 	}
@@ -301,7 +302,7 @@ public class CartDAOImpl implements ICartDAO {
 				o.getCarts().add(cart);
 			
 				
-				session.saveOrUpdate(o);
+				session.merge(o);
 				
 			
 				
@@ -311,7 +312,7 @@ public class CartDAOImpl implements ICartDAO {
 				
 				
 					
-				list=this.queryCart(cart.getId().getOrders().getOrderid());
+				
 				
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -325,8 +326,7 @@ public class CartDAOImpl implements ICartDAO {
 		
 		
 		
-		
-		
+		list=this.queryCart(cart.getId().getOrders().getOrderid());
 		
 		
 		return list;
@@ -390,7 +390,7 @@ public class CartDAOImpl implements ICartDAO {
 		List<Cart>  list=null;
 		try {
 			Session session=HibernateSessionFactory.getSession();
-			Orders o=(Orders)session.load(Orders.class, orderid);
+			Orders o=(Orders)session.get(Orders.class, orderid);
 			Set <Item>set=o.getCarts();
 			
 			list=Arrays.asList(set.toArray(new Cart[]{}));	

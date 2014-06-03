@@ -18,7 +18,7 @@ import com.weikun.po.Profile;
 public class UserDAOImpl implements IUserDAO {
 	private DruidPooledConnection conn=null;
 	public UserDAOImpl(){
-		conn=DB.getConnection();
+		//conn=DB.getConnection();
 
 	}
 	public boolean login(com.weikun.po.Account account) {
