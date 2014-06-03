@@ -11,7 +11,8 @@
             <column name="PRODUCTID" length="10" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="category" class="com.weikun.po.Category" fetch="select" lazy="false">
+        <many-to-one name="category" class="com.weikun.po.Category"
+         fetch="select" lazy="false">
             <column name="CATEGORY" length="10" not-null="true" />
         </many-to-one>
         <property name="name" type="string">

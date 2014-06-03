@@ -64,8 +64,8 @@
 							</b>
 						</td>
 						<td>
-							<s:hidden name="lines" value="%{#cart.linenum}"></s:hidden>
-							<s:hidden name="orderids" value="%{#cart.orders.orderid}"></s:hidden>
+							<s:hidden name="lines" value="%{#cart.id.linenum}"></s:hidden>
+							<s:hidden name="orderids" value="%{#cart.id.orders.orderid}"></s:hidden>
 							<s:property value="#cart.item.product.productid"/>
 						</td>
 						<td>

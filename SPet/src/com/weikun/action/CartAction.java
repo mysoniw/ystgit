@@ -2,16 +2,20 @@ package com.weikun.action;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.weikun.service.CartServiceImpl;
 import com.weikun.service.ICartService;
+import com.weikun.po.Account;
 import com.weikun.po.Cart;
+import com.weikun.po.CartId;
 import com.weikun.po.Orders;
 @ParentPackage(value="struts-default")
 @Namespace(value="/shop")
@@ -21,7 +25,7 @@ import com.weikun.po.Orders;
 	
 	
 })
-public class CartAction extends ActionSupport {
+public class CartAction extends ActionSupport  implements SessionAware{
 	private ICartService service=new CartServiceImpl();
 	private String [] lines;
 	private String [] orderids;
@@ -29,6 +33,7 @@ public class CartAction extends ActionSupport {
 	
 	public String[] getOrderids() {
 		return orderids;
+		
 	}
 
 
@@ -82,8 +87,11 @@ public class CartAction extends ActionSupport {
 		System.out.println(this.lines);
 		Cart c=new Cart();
 		for(int i=0;i<lines.length;i++){
+			CartId id=new CartId();
+			id.setLinenum(new BigDecimal(new Integer(lines[i])));
 			
-			c.getId().setLinenum(new BigDecimal(new Integer(lines[i])));
+			
+			c.setId(id);
 			c.setQuantity(new BigDecimal(new Integer(quantitys[i])));
 			Orders s=new Orders();
 			s.setOrderid(new BigDecimal(new Integer(orderids[i])));
@@ -97,9 +105,18 @@ public class CartAction extends ActionSupport {
 
 	public String add() throws Exception {
 		// TODO Auto-generated method stub
-		list=service.addCart(cart);
+		String username=((Account)map.get("account")).getUsername();
+		list=service.addCart(cart,username);
+		
 		
 		
 		return "success";
+	}
+
+	private Map<String,Object> map;
+	@Override
+	public void setSession(Map<String, Object> arg0) {
+		// TODO Auto-generated method stub
+		map=arg0;
 	}
 }

@@ -14,6 +14,7 @@ import org.hibernate.Transaction;
 import com.alibaba.druid.pool.DruidPooledConnection;
 import com.weikun.db.DB;
 import com.weikun.po.Cart;
+import com.weikun.po.CartId;
 import com.weikun.po.Category;
 import com.weikun.po.HibernateSessionFactory;
 import com.weikun.po.Item;
@@ -64,13 +65,14 @@ public class CartDAOImpl implements ICartDAO {
 		try {
 			Session session=HibernateSessionFactory.getSession();
 			
-			Query query=session.createQuery("select max(c.id.linenum) "
-					+ "from Cart as c where c.id.orders.orderid=:p1");
-			query.setMaxResults(1);
-			Object [] os=(Object [] )query.uniqueResult();
-			if(os!=null){
-				count=Integer.parseInt(os[0].toString());
+			Query query=session.createQuery(""
+					+ "from Cart as c where c.id.orders.orderid=:p1 order by c.id.linenum desc");
+			query.setBigDecimal("p1",new BigDecimal(orderid));
+			List<Cart> list=query.list();
+			if(!list.isEmpty()){
+				count=Integer.parseInt(list.get(0).getId().getLinenum().toString());
 			}			
+				
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -121,12 +123,11 @@ public class CartDAOImpl implements ICartDAO {
 		try {
 			Session session=HibernateSessionFactory.getSession();
 			
-			Query query=session.createQuery("select max(o.orderid) "
-					+ "from Orders as o ");
-			query.setMaxResults(1);
-			Object [] os=(Object [] )query.uniqueResult();
-			if(os!=null){
-				count=Integer.parseInt(os[0].toString());
+			Query query=session.createQuery(
+					 "from Orders as o where o.orderdate is not null order by o.orderid desc ");
+			List<Orders> list=query.list();
+			if(!list.isEmpty()){
+				count=Integer.parseInt(list.get(0).getOrderid().toString());
 			}			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -210,8 +211,10 @@ public class CartDAOImpl implements ICartDAO {
 			Session session=HibernateSessionFactory.getSession();
 			
 			trans=session.beginTransaction();
+			Cart c=(Cart)session.load(Cart.class, cart.getId());
+			c.setQuantity(cart.getQuantity());
 			trans.begin();
-			session.update(cart);
+			session.update(c);
 			
 			trans.commit();
 			list=this.queryCart(cart.getId().getOrders().getOrderid());
@@ -263,11 +266,17 @@ public class CartDAOImpl implements ICartDAO {
 //		
 //		return list;
 //	}
-	public List<Cart> addCart(Cart cart) {
+	public List<Cart> addCart(Cart cart,String username) {
 		
 		Orders o=new Orders();
 		o.setOrderid(this.getMaxOrderid());//把最大的orderid送入到该对象中 之后做查询
-		cart.getId().setOrders(o);
+		CartId id=new CartId();
+		
+		id.setOrders(o);
+		
+		cart.setId(id);
+		
+		
 		
 		Cart oldc=queryItem(cart);
 		List<Cart> list=null;
@@ -283,7 +292,20 @@ public class CartDAOImpl implements ICartDAO {
 				trans=session.beginTransaction();
 				
 				trans.begin();
-				session.save(cart);
+				
+				cart.getId().setLinenum(new BigDecimal(this.getMaxLinenum(cart.getId().getOrders().getOrderid().intValue())));
+				
+				cart.getId().setOrders(o);
+				
+				o.setUserid(username);
+				o.getCarts().add(cart);
+			
+				
+				session.saveOrUpdate(o);
+				
+			
+				
+				
 				
 				trans.commit();
 				
