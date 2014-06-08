@@ -311,7 +311,7 @@ public class CartDAOImpl implements ICartDAO {
 				trans.commit();
 				
 				
-					
+				
 				
 				
 			} catch (Exception e) {
@@ -325,8 +325,8 @@ public class CartDAOImpl implements ICartDAO {
 		}
 		
 		
+		list=this.queryCart(cart.getId().getOrders().getOrderid());	
 		
-		list=this.queryCart(cart.getId().getOrders().getOrderid());
 		
 		
 		return list;

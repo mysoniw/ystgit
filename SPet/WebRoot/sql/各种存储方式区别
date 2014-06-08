@@ -1,0 +1,107 @@
+hibernate的各种保存方式的区别 (save,persist,update,saveOrUpdte,merge,flush,lock)等
+
+hibernate的保存
+hibernate对于对象的保存提供了太多的方法，他们之间有很多不同，这里细说一下，以便区别：
+一、预备知识：
+在所有之前，说明一下，对于hibernate，它的对象有三种状态，transient、persistent、detached
+下边是常见的翻译办法：
+transient：瞬态或者自由态
+persistent：持久化状态
+detached：脱管状态或者游离态
+
+游离状态的实例可以通过调用save()、persist()或者saveOrUpdate()方法进行持久化。
+持久化实例可以通过调用 delete()变成脱管状态。通过get()或load()方法得到的实例都是持久化状态的。
+脱管状态的实例可以通过调用 update()、0saveOrUpdate()、lock()或者replicate()进行持久化。
+
+save()和persist()将会引发SQL的INSERT，delete()会引发SQLDELETE，
+而update()或merge()会引发SQLUPDATE。对持久化（persistent）实例的修改在刷新提交的时候会被检测到，
+它也会引起SQLUPDATE。saveOrUpdate()或者replicate()会引发SQLINSERT或者UPDATE
+
+二、save 和update区别
+把这一对放在第一位的原因是因为这一对是最常用的。
+save的作用是把一个新的对象保存
+update是把一个脱管状态的对象保存
+
+三,update 和saveOrUpdate区别
+这个是比较好理解的，顾名思义，saveOrUpdate基本上就是合成了save和update
+引用hibernate reference中的一段话来解释他们的使用场合和区别
+通常下面的场景会使用update()或saveOrUpdate()： 
+程序在第一个session中加载对象 
+该对象被传递到表现层 
+对象发生了一些改动 
+该对象被返回到业务逻辑层 
+程序调用第二个session的update()方法持久这些改动
+
+saveOrUpdate()做下面的事: 
+如果对象已经在本session中持久化了，不做任何事 
+如果另一个与本session关联的对象拥有相同的持久化标识(identifier)，抛出一个异常 
+如果对象没有持久化标识(identifier)属性，对其调用save() 
+如果对象的持久标识(identifier)表明其是一个新实例化的对象，对其调用save() 
+如果对象是附带版本信息的（通过<version>或<timestamp>） 并且版本属性的值表明其是一个新实例化的对象，save()它。 
+否则update() 这个对象
+
+四,persist和save区别
+这个是最迷离的一对，表面上看起来使用哪个都行，在hibernate reference文档中也没有明确的区分他们.
+这里给出一个明确的区分。（可以跟进src看一下，虽然实现步骤类似，但是还是有细微的差别）
+这里参考http://opensource.atlassian.com/projects/hibernate/browse/HHH-1682中的一个说明：
+---------------------------------------------------------------------------------
+I found that a lot of people have the same doubt. To help to solve this issue 
+I'm quoting Christian Bauer:
+"In case anybody finds this thread...
+
+persist() is well defined. It makes a transient instance persistent. However, 
+it doesn't guarantee that the identifier value will be assigned to the persistent 
+instance immediately, the assignment might happen at flush time. The spec doesn't say 
+that, which is the problem I have with persist().
+
+persist() also guarantees that it will not execute an INSERT statement if it is 
+called outside of transaction boundaries. This is useful in long-running conversations 
+with an extended Session/persistence context.A method like persist() is required.
+
+save() does not guarantee the same, it returns an identifier, and if an INSERT 
+has to be executed to get the identifier (e.g. "identity" generator, not "sequence"), 
+this INSERT happens immediately, no matter if you are inside or outside of a transaction. This is not good in a long-running conversation with an extended Session/persistence context."
+
+---------------------------------------------------------------------------------
+简单翻译一下上边的句子的主要内容：
+1，persist把一个瞬态的实例持久化，但是并"不保证"标识符被立刻填入到持久化实例中，标识符的填入可能被推迟
+到flush的时间。
+
+2，persist"保证"，当它在一个transaction外部被调用的时候并不触发一个Sql Insert，这个功能是很有用的，
+当我们通过继承Session/persistence context来封装一个长会话流程的时候，一个persist这样的函数是需要的。
+
+3，save"不保证"第2条,它要返回标识符，所以它会立即执行Sql insert，不管是不是在transaction内部还是外部
+
+
+五,saveOrUpdateCopy,merge和update区别
+首先说明merge是用来代替saveOrUpdateCopy的，这个详细见这里
+http://www.blogjava.net/dreamstone/archive/2007/07/28/133053.html
+然后比较update和merge
+update的作用上边说了，这里说一下merge的
+如果session中存在相同持久化标识(identifier)的实例，用用户给出的对象的状态覆盖旧有的持久实例 
+如果session没有相应的持久实例，则尝试从数据库中加载，或创建新的持久化实例,最后返回该持久实例 
+用户给出的这个对象没有被关联到session上，它依旧是脱管的 
+重点是最后一句：
+当我们使用update的时候，执行完成后，我们提供的对象A的状态变成持久化状态
+但当我们使用merge的时候，执行完成，我们提供的对象A还是脱管状态，hibernate或者new了一个B，或者检索到
+一个持久对象B，并把我们提供的对象A的所有的值拷贝到这个B，执行完成后B是持久状态，而我们提供的A还是托管状态
+
+六,flush和update区别
+这两个的区别好理解
+update操作的是在脱管状态的对象
+而flush是操作的在持久状态的对象。
+默认情况下，一个持久状态的对象是不需要update的，只要你更改了对象的值，等待hibernate flush就自动
+保存到数据库了。hibernate flush发生再几种情况下：
+1，调用某些查询的时候
+2，transaction commit的时候
+3，手动调用flush的时候
+
+七,lock和update区别
+update是把一个已经更改过的脱管状态的对象变成持久状态
+lock是把一个没有更改过的脱管状态的对象变成持久状态
+对应更改一个记录的内容，两个的操作不同：
+update的操作步骤是：
+（1）更改脱管的对象->调用update
+lock的操作步骤是：
+(2)调用lock把对象从脱管状态变成持久状态-->更改持久状态的对象的内容-->等待flush或者手动flush
+
